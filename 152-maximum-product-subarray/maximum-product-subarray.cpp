@@ -1,21 +1,19 @@
-#include <climits>
 class Solution {
 public:
     int maxProduct(vector<int>& nums) {
-        int n = nums.size();
-        int leftToRight = 1, rightToLeft = 1; 
-        int maxProd = INT_MIN;
+        int res = nums[0];
+        int maxProd = nums[0];
+        int minProd = nums[0];
 
-        for(int i=0; i<n; i++){
-            if (leftToRight==0) leftToRight = 1;
-            if (rightToLeft==0) rightToLeft = 1; 
+        for (int i = 1; i < nums.size(); i++) {
+            int curr = nums[i];
+            if (curr < 0) swap(maxProd, minProd);
 
-            leftToRight *= nums[i];
-            rightToLeft *= nums[n-1-i];
+            maxProd = max(curr, maxProd * curr);
+            minProd = min(curr, minProd * curr);
 
-            maxProd = max({leftToRight, rightToLeft, maxProd});
+            res = max(res, maxProd);
         }
-
-        return maxProd;
+        return res;
     }
 };
