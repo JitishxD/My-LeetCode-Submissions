@@ -1,41 +1,38 @@
 class Solution {
 public:
-    int binarySearch(vector<int>& arr, int low, int high, int key) {
-        while (low <= high) {
-            int mid = low + (high - low) / 2;
-
-            if (arr[mid] == key) return mid;
-            else if (arr[mid] > key) high = mid - 1;
-            else low = mid + 1;
-        }
-        return -1;
-    }
-
-    int minElem(vector<int>& arr, int low, int high) {
-        while (low <= high) {
-            // array is already sorted
-            if (arr[low] <= arr[high]) return low;
-
-            int mid = low + (high - low) / 2;
-            // right half of array is not sorted
-            if (arr[mid] > arr[high]) low = mid + 1;
-            // right half of array is sorted
-            else high = mid;
-        }
-        return low;
-    }
-
-    int search(vector<int>& arr, int key) {
+    int search(vector<int>& arr, int target) {
         int n = arr.size();
-        int pivot = minElem(arr, 0, n - 1);
+        int low = 0, high = n - 1;
 
-        if (arr[pivot] == key) return pivot;
+        while (low <= high) {
+            int mid = (low + high) / 2;
 
-        // array is sorted.
-        if (pivot == 0) return binarySearch(arr, 0, n - 1, key);
+            // If mid points to the target
+            if (arr[mid] == target)
+                return mid;
 
-        if (arr[0] <= key) return binarySearch(arr, 0, pivot - 1, key);
+            // Edge case
+            if (arr[low] == arr[mid] && arr[mid] == arr[high]) {
+                low++;
+                high--;
+                continue;
+            }
 
-        return binarySearch(arr, pivot + 1, n - 1, key);
+            // If the left half is sorted
+            if (arr[low] <= arr[mid]) {
+                if (arr[low] <= target && target <= arr[mid])
+                    high = mid - 1;
+                else
+                    low = mid + 1;
+            } else {
+                // Right half is sorted
+                if (arr[mid] <= target && target <= arr[high])
+                    low = mid + 1;
+                else
+                    high = mid - 1;
+            }
+        }
+
+        return -1;
     }
 };
