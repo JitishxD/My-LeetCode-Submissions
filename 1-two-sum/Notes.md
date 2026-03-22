@@ -1,1 +1,1 @@
-<h2>two-sum Notes</h2><hr>Using HashMap
+<h2>two-sum Notes</h2><hr>Two-Pointers Approach
