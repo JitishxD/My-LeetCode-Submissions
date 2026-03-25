@@ -13,20 +13,11 @@ public:
         long long first = 0, second = 0, total = 0;
 
         for (int i = 0; i < n; i++) {
-            long long temp = 0;
             for (int j = 0; j < m; j++) {
-                temp += grid[i][j];
+                hSum[i] += grid[i][j];   // row sum
+                vSum[j] += grid[i][j];   // column sum
+                total += grid[i][j];     // total sum
             }
-            hSum[i] = temp;
-            total += temp;
-        }
-
-        for (int j = 0; j < m; j++) {
-            long long temp = 0;
-            for (int i = 0; i < n; i++) {
-                temp += grid[i][j];
-            }
-            vSum[j] = temp;
         }
 
         // Horizontal cuts
