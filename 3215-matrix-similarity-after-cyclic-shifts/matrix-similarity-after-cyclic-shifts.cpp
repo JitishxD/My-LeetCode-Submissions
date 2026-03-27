@@ -1,30 +1,25 @@
 class Solution {
 public:
-    void rShift(vector<int>& row, int k){
-        reverse(row.begin(), row.end());
-        reverse(row.begin(), row.begin()+k);
-        reverse(row.begin()+k, row.end());
-    }
-
-    void lShift(vector<int>& row, int k){
-        reverse(row.begin(), row.begin()+k);
-        reverse(row.begin()+k, row.end());
-        reverse(row.begin(), row.end());
-    }
-
     bool areSimilar(vector<vector<int>>& mat, int k) {
-        int n = mat.size();
-        int m = mat[0].size();
-        k = k % m;
-        if(k==0) return true;
+        int m = mat.size();
+        int n = mat[0].size();
+        k = k % n;
+        if(k == 0) return true;
 
-        vector<vector<int>> original = mat;
+        for(int i = 0; i < m; i++) {
+            for(int j = 0; j < n; j++) {
+                int currIdx = j;
+                int finalIdx;
 
-        for(int i=0; i<n; i++){
-            if(i % 2 == 0) lShift(mat[i], k);
-            else rShift(mat[i], k);
+                if(i % 2 == 0) finalIdx = (j + k)%n;
+                else finalIdx = (j - k + n) % n;
+
+                if(mat[i][currIdx] != mat[i][finalIdx]) 
+                    return false;
+
+            }
         }
 
-        return mat == original;
+        return true;
     }
 };
