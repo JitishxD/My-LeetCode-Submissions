@@ -1,19 +1,15 @@
 class Solution {
 public:
-    int lb(vector<int>& arr, int target){
+    int binarySearch(vector<int>& arr, int target){
         int i=0, j=arr.size()-1;
-        int ans = arr.size();
-        while(i<=j){
-            int mid = i + (j-i)/2;
-            if(arr[mid] >= target) {
-                ans = mid;
-                j = mid-1;
-            } else {
-                i = mid+1;
-            }
-        }
+        while(i <= j){
+            int mid = i+(j-i)/2;
 
-        return ans;
+            if(arr[mid] == target) return mid;
+            else if(arr[mid] < target) i = mid+1;
+            else j = mid-1;
+        }
+        return -1;
     }
 
     vector<int> solveQueries(vector<int>& nums, vector<int>& queries) {
@@ -38,7 +34,7 @@ public:
                 continue;
             }
 
-            int k = lb(curr_idx, q_idx);
+            int k = binarySearch(curr_idx, q_idx);
 
             // The next k at left side (circularly)
             int left = curr_idx[((k-1)+sz)%sz];
