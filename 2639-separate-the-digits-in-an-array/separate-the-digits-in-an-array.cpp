@@ -1,17 +1,24 @@
 class Solution {
 public:
     vector<int> separateDigits(vector<int>& nums) {
-        int n = nums.size();
         vector<int> ans;
-        for(int i=n-1; i>=0; i--){
-            while(nums[i]!=0){
-                int digit = nums[i]%10;
-                ans.push_back(digit);
-                nums[i] /= 10;
+        
+        for (int num : nums) {
+            int temp[10]; // A 32-bit int has at most 10 digits
+            int count = 0;
+            
+            // Extract digits (they come out in reverse)
+            while (num > 0) {
+                temp[count++] = num % 10;
+                num /= 10;
+            }
+            
+            // Push them into the answer array in the correct order
+            for (int i = count - 1; i >= 0; i--) {
+                ans.push_back(temp[i]);
             }
         }
-
-        reverse(ans.begin(), ans.end());
+        
         return ans;
     }
 };
